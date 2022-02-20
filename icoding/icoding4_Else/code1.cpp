@@ -1,6 +1,7 @@
 /*实现三元组表示的两个稀疏矩阵的加法。相关定义如下：*/
 #include <stdbool.h>
 #include <stdio.h>
+
 #define MAXSIZE 100 //假设非零元个数的最大值为100
 #define ElemType int
 typedef struct
