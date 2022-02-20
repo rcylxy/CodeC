@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define BLOCK_SIZE 10 // 可由用户定义的块大小
+#define BLOCK_SIZE 4  // 可由用户定义的块大小
 #define BLS_BLANK '#' // 用于空白处的补齐字符
 typedef struct _block
 {
@@ -21,6 +21,7 @@ void blstr_init(BLString *T)
   T->tail = NULL;
 }
 int Mystrlen(const char *S)
+
 {
   int c = 0;
   while (*S++ != '\0')
@@ -88,6 +89,44 @@ int Mystrcpy(BLString *T, const char *s)
   }
   return 1;
 }
+bool blstr_substr(BLString src, int pos, int len, BLString *sub)
+{
+  int subscriptOfBlock = pos / BLOCK_SIZE; //定位块的下标，从0开始
+  int elseOfNum = pos % BLOCK_SIZE;        //定位位置在块中的位置，从0开始
+  int cntsob = 0;
+  Block *p = (Block *)malloc(sizeof(Block));
+  p = src.head;
+  if (len < 1 || pos < 0 || pos >= src.len)
+    return false;
+  while (p && cntsob <= subscriptOfBlock)
+  {
+    p = p->next;
+    cntsob++;
+  }
+  if (!p)
+    return false;
+  char *temp = (char *)malloc((len + 5) * sizeof(char));
+  int i = 0;
+  while (i < len)
+  {
+    if (elseOfNum < BLOCK_SIZE)
+    {
+      if (p->ch[elseOfNum] == BLS_BLANK)
+        break;
+      temp[i++] = p->ch[elseOfNum++];
+    }
+    else if (elseOfNum >= BLOCK_SIZE)
+    {
+      p = p->next;
+      elseOfNum = 0;
+      if (!p)
+        return false;
+    }
+  }
+  temp[i] = '\0';
+  Mystrcpy(sub, temp);
+  return true;
+}
 void printString(BLString *T)
 {
   Block *p = T->head->next;
@@ -101,14 +140,6 @@ void printString(BLString *T)
     p = p->next;
   }
 }
-/*src为要查找的字符串
-pos为子串开始的下标
-len为子串的长度
-sub在函数调用运行前指向一个已经初始化好的空串，在函数返回时，sub指向串src从第pos个字符起长度为len的子串
-函数查找成功返回true，参数不正确返回 false*/
-bool blstr_substr(BLString src, int pos, int len, BLString *sub)
-{
-}
 int main()
 {
   BLString *T;
@@ -117,4 +148,21 @@ int main()
   blstr_init(T);
   Mystrcpy(T, s);
   printString(T);
+  BLString *sub;
+  sub = (BLString *)malloc(sizeof(BLString));
+  const char *ch = "";
+  blstr_init(sub);
+  Mystrcpy(sub, ch);
+
+  if (blstr_substr(*T, 6, 3, sub) == false)
+  {
+    printf("\n");
+    printf("失败！\n");
+  }
+  else
+  {
+    printf("\n\n");
+    printString(sub);
+  }
+  return 0;
 }
