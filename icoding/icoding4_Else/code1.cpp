@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define MAXSIZE 100 //假设非零元个数的最大值为100
 #define ElemType int
 typedef struct
