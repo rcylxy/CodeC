@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,6 +33,72 @@ int del_cross_list(PCrossList L, ElemType k);
 del_cross_list 函数删除十字链表中所有值为 k 的结点，并返回删除结点的个数。*/
 int init_cross_list(PCrossList L, const ElemType *A, int m, int n)
 {
+  OLNode *p, *q;
+  int sum = 0;
+  L->rows = m;
+  L->cols = n;
+  if (!((L->rowhead = (OLink *)malloc(sizeof(OLink) * (m + 1)))))
+    exit(_OVERFLOW);
+  if (!((L->colhead) = (OLink *)malloc(sizeof(OLink) * (n + 1))))
+    exit(_OVERFLOW);
+  int i, j;
+  // init
+  for (i = 0; i < m; ++i)
+    L->rowhead[i] = NULL;
+  for (j = 0; j < n; ++j)
+    L->colhead[j] = NULL;
+  // assign
+  for (i = 0; i < m; ++i)
+  {
+    for (j = 0; j < n; ++j)
+    {
+      if (A[n * i + j] != 0)
+      {
+        sum++;
+        if (!(p = (OLNode *)malloc(sizeof(OLink))))
+          return 0;
+        p->col = n;
+        p->row = m;
+        p->value = A[n * i + j];
+        if (L->rowhead[i] == NULL)
+        {
+          L->rowhead[i] = p;
+        }
+        else if (p->col < L->rowhead[i]->col)
+        {
+          p->right = L->rowhead[i];
+          L->rowhead[i] = p;
+        }
+        else
+        {
+          for (q = L->rowhead[i]; q->right && q->right->col < j; q = q->right)
+          {
+            p->right = q->right;
+            q->right = p;
+          }
+        }
+        if (L->colhead[j] == NULL)
+        {
+          L->colhead[j] = p;
+        }
+        else if (p->row < L->colhead[j]->row)
+        {
+          p->down = L->colhead[j];
+          L->colhead[j] = p;
+        }
+        else
+        {
+          for (q = L->colhead[j]; q->down && q->down->row < i; q = q->down)
+          {
+            p->down = q->down;
+            q->down = p;
+          }
+        }
+      }
+    }
+  }
+  L->nums = sum;
+  return sum;
 }
 int del_cross_list(PCrossList L, ElemType k)
 {
