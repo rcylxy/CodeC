@@ -157,9 +157,6 @@ void pre_order_non_recursion(BiTree T)
     }
   }
 }
-bool path(BiTNode *root, BiTNode *node, Stack *s)
-{
-}
 int main()
 {
   BiTree T;
