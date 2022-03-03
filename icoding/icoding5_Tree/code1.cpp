@@ -34,30 +34,31 @@ void pre_order_not(BiTree root)
 }
 void pre_order_my(BiTree root)
 {
-  Stack *S;
-  init_stack(S);
-  ElemType px = root;
-  while (px || !is_empty(S))
+  Stack S;
+  init_stack(&S);
+  // S.top = -1;
+  BiTree p = root;
+  // printf("%d", T->data);
+  while (p || !is_empty(&S))
   {
-    if (px->right)
-      push(S, px->right);
-    if (px->left)
+    if (p->right)
+      push(&S, p->right);
+    if (p->left)
     {
-      visit_node(px);
-      px = px->left;
+      visit_node(p);
+      p = p->left;
     }
-    if (px->left == NULL)
+    else if (p->left == NULL)
     {
-      if (!is_empty(S))
+      visit_node(p);
+      if (!is_empty(&S))
       {
-        pop(S, &px);
-        visit_node(px);
+        pop(&S, &p);
       }
-      else if (is_empty(S))
+      else if (is_empty(&S))
         return;
     }
   }
-  return;
 }
 void pre_order_his(BiTree root)
 {
