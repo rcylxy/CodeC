@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAXSIZE 20
+#define MAXSIZE 21
 typedef int ElemType;
 struct _seqlist
 {
@@ -16,7 +16,8 @@ void InitSqList(SeqList *L)
   srand((time(0)));
   for (int i = 0; i < MAXSIZE; ++i)
   {
-    L->elem[i] = rand() % 50;
+    // L->elem[i] = rand() % 50;
+    scanf("%d", &L->elem[i]);
   }
   L->last = MAXSIZE - 1; //最后一个元素的下标
 }

@@ -13,13 +13,16 @@ void odd_even(SeqList *L)
       i--; //偶数-1
     if (L->elem[j] % 2 != 0)
       j++; //奇数+1
-    if (L->elem[i] % 2 != 0 && L->elem[j] % 2 == 0)
+    if (L->elem[i] % 2 != 0 || L->elem[j] % 2 == 0)
     {
       int tmp = L->elem[i];
       L->elem[i] = L->elem[j];
       L->elem[j] = tmp;
     }
   }
+  int tmp = L->elem[i];
+  L->elem[i] = L->elem[j];
+  L->elem[j] = tmp;
 }
 int main()
 {
