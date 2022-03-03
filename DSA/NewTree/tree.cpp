@@ -133,7 +133,7 @@ void pre_order_non_recursion(BiTree T)
 {
   Stack S;
   init_stack(&S);
-  S.top = -1;
+  // S.top = -1;
   BiTree p = T;
   // printf("%d", T->data);
   while (p || !is_empty(&S))
@@ -145,12 +145,12 @@ void pre_order_non_recursion(BiTree T)
       pre_order(p);
       p = p->left;
     }
-    if (p->left == NULL)
+    else if (p->left == NULL)
     {
+      pre_order(p);
       if (!is_empty(&S))
       {
         pop(&S, &p);
-        pre_order(p);
       }
       else if (is_empty(&S))
         return;
@@ -166,10 +166,10 @@ int main()
   printf("\n");
   printf("前序遍历:\n");
   PreOrderTraverse(T);
-  // printf("\n中序遍历:\n");
-  // InOrderTraverse(T);
-  // printf("\n后序遍历:\n");
-  // PostOrderTraverse(T);
+  printf("\n中序遍历:\n");
+  InOrderTraverse(T);
+  printf("\n后序遍历:\n");
+  PostOrderTraverse(T);
   printf("\n我的前序遍历:\n");
   pre_order_non_recursion(T);
 }
