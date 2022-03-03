@@ -1,34 +1,63 @@
 #include "linklist.h"
 
+// void lnk_merge(LinkList A, LinkList B, LinkList C)
+// {
+//   Node *a, *b, *c;
+//   a = A->next;
+//   b = B->next;
+//   c = C;
+//   while (a && b)
+//   {
+//     c->next = a;
+//     a = a->next;
+//     c = c->next;
+//     c->next = b;
+//     b = b->next;
+//     c = c->next;
+//   }
+//   if ((!a) && (!b))
+//   {
+//     return;
+//   }
+//   else if (!a)
+//   {
+//     c->next = b;
+//     return;
+//   }
+//   else if (!b)
+//   {
+//     c->next = a;
+//     return;
+//   }
+// }
 void lnk_merge(LinkList A, LinkList B, LinkList C)
 {
   Node *a, *b, *c;
   a = A->next;
   b = B->next;
   c = C;
-  while (a && b)
+  while (1)
   {
-    c->next = a;
-    a = a->next;
-    c = c->next;
-    c->next = b;
-    b = b->next;
-    c = c->next;
+    if (a == NULL)
+      return;
+    else
+    {
+      c->next = a;
+      a = a->next;
+      c = c->next;
+    }
+    if (b == NULL)
+      return;
+    else
+    {
+      c->next = b;
+      b = b->next;
+      c = c->next;
+    }
   }
-  if ((!a) && (!b))
-  {
-    return;
-  }
-  else if (!a)
-  {
-    c->next = b;
-    return;
-  }
-  else if (!b)
-  {
-    c->next = a;
-    return;
-  }
+}
+void lnk_merge(LinkList A, LinkList B, LinkList C)
+{
 }
 
 int main(int argc, char *argv[])
