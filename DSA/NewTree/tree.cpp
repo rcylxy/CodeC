@@ -39,6 +39,7 @@ bool is_full(Stack *S)
 }
 void init_stack(Stack *S)
 {
+  S = (Stack *)malloc(sizeof(Stack));
   S->top = -1;
   return;
 }
@@ -46,7 +47,8 @@ bool push(Stack *S, ElemType x)
 {
   if (is_full(S))
     return false;
-  S->elem[S->top++] = x;
+  S->top++;
+  S->elem[S->top] = x;
   return true;
 }
 bool pop(Stack *S, ElemType *px)
@@ -71,7 +73,8 @@ void pre_order(BiTree root)
 }
 bool InitBiTree(BiTree *T)
 {
-  *T = (BiTree)malloc(sizeof(BiTNode));
+  *T = NULL;
+  return true;
 }
 bool CreateBiTree(BiTree *T)
 {
@@ -104,10 +107,70 @@ void PreOrderTraverse(BiTree T)
   PreOrderTraverse(T->right);
   return;
 }
+void InOrderTraverse(BiTree T)
+{
+  if (T == NULL)
+  {
+    return;
+  }
+  InOrderTraverse(T->left);
+  pre_order(T);
+  InOrderTraverse(T->right);
+  return;
+}
+void PostOrderTraverse(BiTree T)
+{
+  if (T == NULL)
+  {
+    return;
+  }
+  PostOrderTraverse(T->left);
+  PostOrderTraverse(T->right);
+  pre_order(T);
+  return;
+}
+void pre_order_non_recursion(BiTree T)
+{
+  Stack S;
+  init_stack(&S);
+  S.top = -1;
+  BiTree p = T;
+  // printf("%d", T->data);
+  while (p || !is_empty(&S))
+  {
+    if (p->right)
+      push(&S, p->right);
+    if (p->left)
+    {
+      pre_order(p);
+      p = p->left;
+    }
+    if (p->left == NULL)
+    {
+      if (!is_empty(&S))
+      {
+        pop(&S, &p);
+        pre_order(p);
+      }
+      else if (is_empty(&S))
+        return;
+    }
+  }
+}
+
 int main()
 {
   BiTree T;
   InitBiTree(&T);
   CreateBiTree(&T);
+  printf("\n");
+  printf("前序遍历:\n");
   PreOrderTraverse(T);
+  // printf("\n中序遍历:\n");
+  // InOrderTraverse(T);
+  // printf("\n后序遍历:\n");
+  // PostOrderTraverse(T);
+  printf("\n我的前序遍历:\n");
+  pre_order_non_recursion(T);
 }
+// 1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1
