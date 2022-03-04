@@ -1,34 +1,4 @@
-#include <Windows.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#define Stack_Size 50
-typedef int DataType;
-typedef struct Node
-{
-  DataType data;
-  struct Node *left;
-  struct Node *right;
-} BiTNode, *BiTree;
-typedef BiTNode *ElemType;
-typedef struct
-{
-  BiTNode *elem[Stack_Size];
-  int top;
-} Stack;
-// bool is_full(Stack *S);
-// void init_stack(Stack *S);        // 初始化栈
-// bool push(Stack *S, ElemType x);  // x 入栈
-// bool pop(Stack *S, ElemType *px); //出栈，元素保存到px所指的单元，函数返回true,栈为空时返回 false
-// bool top(Stack *S, ElemType *px); //获取栈顶元素，将其保存到px所指的单元，函数返回true，栈满时返回 false
-// bool is_empty(Stack *S);          // 栈为空时返回 true，否则返回 false
-// void pre_order(BiTree root);
-// bool InitBiTree(BiTree *T);
-// bool CreateBiTree(BiTree *T);
-// void PreOrderTraverse(BiTree T);
+#include "tree.h"
 bool is_empty(Stack *S)
 {
   return (S->top == -1);
@@ -188,16 +158,19 @@ bool path(BiTNode *root, BiTNode *node, Stack *s)
       if (T == node)
         return true;
       T = T->left;
+      if (T == node)
+        return true;
     }
     pop(s, &T);
-    if (T == node)
-      return true;
     T = T->right;
     if (T == node)
       return true;
   }
   return false;
 }
+/* test
+1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1
+*/
 int main()
 {
   BiTree T;
@@ -207,6 +180,7 @@ int main()
   s.top = -1;
   InitBiTree(&T);
   CreateBiTree(&T);
+  node = T->left->left->right;
   printf("\n");
   printf("前序遍历:\n");
   pre_order_non_recursion(T);
@@ -220,6 +194,13 @@ int main()
   pre_order_his(T);
   printf("\n");
   printf("%d", path(T, node, &s));
+  printf("\n");
+  while (!is_empty(&s))
+  {
+    BiTree T;
+    pop(&s, &T);
+    printf("%d ", T->data);
+  }
 }
 /* test
 1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1
