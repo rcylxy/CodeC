@@ -19,16 +19,16 @@ typedef struct
   BiTNode *elem[Stack_Size];
   int top;
 } Stack;
-bool is_full(Stack *S);
-void init_stack(Stack *S);        // 初始化栈
-bool push(Stack *S, ElemType x);  // x 入栈
-bool pop(Stack *S, ElemType *px); //出栈，元素保存到px所指的单元，函数返回true,栈为空时返回 false
-bool top(Stack *S, ElemType *px); //获取栈顶元素，将其保存到px所指的单元，函数返回true，栈满时返回 false
-bool is_empty(Stack *S);          // 栈为空时返回 true，否则返回 false
-void pre_order(BiTree root);
-bool InitBiTree(BiTree *T);
-bool CreateBiTree(BiTree *T);
-void PreOrderTraverse(BiTree T);
+// bool is_full(Stack *S);
+// void init_stack(Stack *S);        // 初始化栈
+// bool push(Stack *S, ElemType x);  // x 入栈
+// bool pop(Stack *S, ElemType *px); //出栈，元素保存到px所指的单元，函数返回true,栈为空时返回 false
+// bool top(Stack *S, ElemType *px); //获取栈顶元素，将其保存到px所指的单元，函数返回true，栈满时返回 false
+// bool is_empty(Stack *S);          // 栈为空时返回 true，否则返回 false
+// void pre_order(BiTree root);
+// bool InitBiTree(BiTree *T);
+// bool CreateBiTree(BiTree *T);
+// void PreOrderTraverse(BiTree T);
 bool is_empty(Stack *S)
 {
   return (S->top == -1);
@@ -133,7 +133,7 @@ void pre_order_non_recursion(BiTree T)
 {
   Stack S;
   init_stack(&S);
-  // S.top = -1;
+  S.top = -1;
   BiTree p = T;
   // printf("%d", T->data);
   while (p || !is_empty(&S))
@@ -161,6 +161,7 @@ void pre_order_his(BiTree root)
 {
   Stack S;
   init_stack(&S);
+  S.top = -1;
   BiTree T = root;
   while (T || !is_empty(&S))
   {
@@ -174,14 +175,41 @@ void pre_order_his(BiTree root)
     T = T->right;
   }
 }
+bool path(BiTNode *root, BiTNode *node, Stack *s)
+{
+  BiTree T = root;
+  while (!is_empty(s) || T)
+  {
+    if (T == node)
+      return true;
+    while (T)
+    {
+      push(s, T);
+      if (T == node)
+        return true;
+      T = T->left;
+    }
+    pop(s, &T);
+    if (T == node)
+      return true;
+    T = T->right;
+    if (T == node)
+      return true;
+  }
+  return false;
+}
 int main()
 {
   BiTree T;
+  BiTNode *node = (BiTNode *)malloc(sizeof(BiTNode));
+  Stack s;
+  init_stack(&s);
+  s.top = -1;
   InitBiTree(&T);
   CreateBiTree(&T);
   printf("\n");
   printf("前序遍历:\n");
-  PreOrderTraverse(T);
+  pre_order_non_recursion(T);
   printf("\n中序遍历:\n");
   InOrderTraverse(T);
   printf("\n后序遍历:\n");
@@ -190,6 +218,8 @@ int main()
   pre_order_non_recursion(T);
   printf("\n他的前序遍历:\n");
   pre_order_his(T);
+  printf("\n");
+  printf("%d", path(T, node, &s));
 }
 /* test
 1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1
