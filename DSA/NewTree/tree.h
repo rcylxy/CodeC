@@ -1,3 +1,4 @@
+#pragma once
 #include <Windows.h>
 #include <math.h>
 #include <stdbool.h>
@@ -34,3 +35,4 @@ void PostOrderTraverse(BiTree T);
 void pre_order_non_recursion(BiTree T);
 void pre_order_his(BiTree root);
 bool path(BiTNode *root, BiTNode *node, Stack *s);
+BiTNode *nearest_ancestor(BiTree root, BiTNode *p, BiTNode *q);

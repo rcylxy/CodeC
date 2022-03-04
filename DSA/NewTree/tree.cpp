@@ -147,26 +147,70 @@ void pre_order_his(BiTree root)
 }
 bool path(BiTNode *root, BiTNode *node, Stack *s)
 {
+  if (!node)
+    return false;
   BiTree T = root;
   while (!is_empty(s) || T)
   {
     if (T == node)
+    {
+      push(s, T);
       return true;
+    }
+
     while (T)
     {
       push(s, T);
       if (T == node)
+      {
+        push(s, T);
         return true;
+      }
       T = T->left;
       if (T == node)
+      {
+        push(s, T);
         return true;
+      }
+    }
+    if (T == node)
+    {
+      push(s, T);
+      return true;
     }
     pop(s, &T);
     T = T->right;
     if (T == node)
+    {
+      push(s, T);
       return true;
+    }
   }
   return false;
+}
+void printStack(Stack *s)
+{
+  while (!is_empty(s))
+  {
+    BiTree T;
+    pop(s, &T);
+    printf("%d ", T->data);
+  }
+  return;
+}
+BiTNode *nearest_ancestor(BiTree root, BiTNode *p, BiTNode *q)
+{
+  Stack s1;
+  init_stack(&s1);
+  s1.top = -1;
+  path(root, p, &s1);
+  printStack(&s1);
+  printf("\n");
+  Stack s2;
+  init_stack(&s2);
+  s2.top = -1;
+  path(root, q, &s2);
+  printStack(&s2);
 }
 /* test
 1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1
@@ -181,7 +225,6 @@ int main()
   s.top = -1;
   InitBiTree(&T);
   CreateBiTree(&T);
-  node = T->left->left->right;
   printf("\n");
   printf("前序遍历:\n");
   PreOrderTraverse(T);
@@ -195,16 +238,18 @@ int main()
   pre_order_his(T);
   printf("\n");
   printf("是否找到路径？");
+  node = T->right->left->left;
   int outcome = path(T, node, &s);
   printf("%d\n", outcome);
   if (outcome != 0)
-    printf("路径是：");
-  while (!is_empty(&s) && outcome != 0)
   {
-    BiTree T;
-    pop(&s, &T);
-    printf("%d ", T->data);
+    printf("路径是：");
+    printStack(&s);
   }
+  printf("\n");
+  // BiTNode *p = T->left->right;
+  // BiTNode *q = T->left->left;
+  // nearest_ancestor(T, p, q);
 }
 /* test
 1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1

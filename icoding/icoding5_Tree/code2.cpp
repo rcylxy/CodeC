@@ -47,3 +47,27 @@ bool path(BiTNode *root, BiTNode *node, Stack *s)
   }
   return false;
 }
+
+bool path_my(BiTNode *root, BiTNode *node, Stack *s)
+{
+  BiTree T = root;
+  while (!is_empty(s) || T)
+  {
+    if (T == node)
+      return true;
+    while (T)
+    {
+      push(s, T);
+      if (T == node)
+        return true;
+      T = T->left;
+      if (T == node)
+        return true;
+    }
+    pop(s, &T);
+    T = T->right;
+    if (T == node)
+      return true;
+  }
+  return false;
+}
