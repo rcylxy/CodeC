@@ -173,6 +173,7 @@ bool path(BiTNode *root, BiTNode *node, Stack *s)
 */
 int main()
 {
+  printf("请输入整型二叉树结点，以-1为虚结点！\n");
   BiTree T;
   BiTNode *node = (BiTNode *)malloc(sizeof(BiTNode));
   Stack s;
@@ -183,19 +184,22 @@ int main()
   node = T->left->left->right;
   printf("\n");
   printf("前序遍历:\n");
-  pre_order_non_recursion(T);
+  PreOrderTraverse(T);
   printf("\n中序遍历:\n");
   InOrderTraverse(T);
   printf("\n后序遍历:\n");
   PostOrderTraverse(T);
-  printf("\n我的前序遍历:\n");
+  printf("\n改进前非递归前序遍历:\n");
   pre_order_non_recursion(T);
-  printf("\n他的前序遍历:\n");
+  printf("\n改进后非递归前序遍历:\n");
   pre_order_his(T);
   printf("\n");
-  printf("%d", path(T, node, &s));
-  printf("\n");
-  while (!is_empty(&s))
+  printf("是否找到路径？");
+  int outcome = path(T, node, &s);
+  printf("%d\n", outcome);
+  if (outcome != 0)
+    printf("路径是：");
+  while (!is_empty(&s) && outcome != 0)
   {
     BiTree T;
     pop(&s, &T);
