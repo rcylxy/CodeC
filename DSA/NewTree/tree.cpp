@@ -147,44 +147,27 @@ void pre_order_his(BiTree root)
 }
 bool path(BiTNode *root, BiTNode *node, Stack *s)
 {
-  if (!node)
+  BiTree T = root, p = NULL;
+  if (T == NULL || node == NULL || !is_empty(s))
     return false;
-  BiTree T = root;
-  while (!is_empty(s) || T)
+  while (T || !is_empty(s))
   {
-    if (T == node)
-    {
-      push(s, T);
-      return true;
-    }
-
     while (T)
     {
       push(s, T);
       if (T == node)
-      {
-        push(s, T);
         return true;
-      }
       T = T->left;
-      if (T == node)
-      {
-        push(s, T);
-        return true;
-      }
     }
-    if (T == node)
+    top(s, &T);
+    if (!T->right || T->right == p)
     {
-      push(s, T);
-      return true;
+      p = T;
+      pop(s, &T);
+      T = NULL;
     }
-    pop(s, &T);
-    T = T->right;
-    if (T == node)
-    {
-      push(s, T);
-      return true;
-    }
+    else
+      T = T->right;
   }
   return false;
 }
@@ -198,20 +181,20 @@ void printStack(Stack *s)
   }
   return;
 }
-BiTNode *nearest_ancestor(BiTree root, BiTNode *p, BiTNode *q)
-{
-  Stack s1;
-  init_stack(&s1);
-  s1.top = -1;
-  path(root, p, &s1);
-  printStack(&s1);
-  printf("\n");
-  Stack s2;
-  init_stack(&s2);
-  s2.top = -1;
-  path(root, q, &s2);
-  printStack(&s2);
-}
+// BiTNode *nearest_ancestor(BiTree root, BiTNode *p, BiTNode *q)
+// {
+//   Stack s1;
+//   init_stack(&s1);
+//   s1.top = -1;
+//   path(root, p, &s1);
+//   printStack(&s1);
+//   printf("\n");
+//   Stack s2;
+//   init_stack(&s2);
+//   s2.top = -1;
+//   path(root, q, &s2);
+//   printStack(&s2);
+// }
 /* test
 1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1
 */
@@ -220,9 +203,6 @@ int main()
   printf("请输入整型二叉树结点，以-1为虚结点！\n");
   BiTree T;
   BiTNode *node = (BiTNode *)malloc(sizeof(BiTNode));
-  Stack s;
-  init_stack(&s);
-  s.top = -1;
   InitBiTree(&T);
   CreateBiTree(&T);
   printf("\n");
@@ -238,9 +218,13 @@ int main()
   pre_order_his(T);
   printf("\n");
   printf("是否找到路径？");
-  node = T->right->left->left;
+  Stack s;
+  init_stack(&s);
+  s.top = -1;
+  // node = T->left->left->right->left;
+  node = T->right->right->left;
   int outcome = path(T, node, &s);
-  printf("%d\n", outcome);
+  printf("\n%d\n", outcome);
   if (outcome != 0)
   {
     printf("路径是：");
@@ -253,4 +237,5 @@ int main()
 }
 /* test
 1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1
+1 2 3 4 -1 -1 5 6 -1 -1 -1 7 -1 8 -1 -1 9 -1 10 11 -1 -1 12 -1 -1
 */
