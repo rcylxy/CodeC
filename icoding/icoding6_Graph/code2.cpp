@@ -8,7 +8,7 @@
 //顶点为int
 typedef int VertexType; //顶点为int
 typedef int InfoPtr;
-//图的种类：DG 表示有向图, DN 表示有向网, UDG 表示无向图, UDN 表示无向网
+//图的种类：DG 表示有向图, DN 表示有向网, UDG 表g示无向图, UDN 表示无向网
 typedef enum
 {
   DG,
