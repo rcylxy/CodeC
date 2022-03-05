@@ -37,3 +37,6 @@ void pre_order_his(BiTree root);
 bool path(BiTNode *root, BiTNode *node, Stack *s);
 void printStack(Stack *s);
 BiTNode *nearest_ancestor(BiTree root, BiTNode *p, BiTNode *q);
+bool DestroyBiTree(BiTree *T);
+bool BiTreeEmpty(BiTree T);
+int BiTreeDepth(BiTree T);

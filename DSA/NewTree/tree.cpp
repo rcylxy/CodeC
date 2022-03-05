@@ -215,6 +215,50 @@ BiTNode *nearest_ancestor(BiTree root, BiTNode *p, BiTNode *q)
   }
   return ret;
 }
+bool DestroyBiTree(BiTree *T)
+{
+  if (*T)
+  {
+    if ((*T)->left)
+    {
+      DestroyBiTree(&((*T)->left));
+    }
+    if ((*T)->right)
+    {
+      DestroyBiTree(&((*T)->right));
+    }
+    free(*T);
+    *T = NULL;
+  }
+  return true;
+}
+bool BiTreeEmpty(BiTree T)
+{
+  return (!T);
+}
+int BiTreeDepth(BiTree T)
+{
+  int i, j;
+  if (T == NULL)
+    return 0;
+  if (T->left)
+  {
+    i = BiTreeDepth(T->left);
+  }
+  else
+  {
+    i = 0;
+  }
+  if (T->right)
+  {
+    j = BiTreeDepth(T->right);
+  }
+  else
+  {
+    j = 0;
+  }
+  return i > j ? i + 1 : j + 1;
+}
 int main(int argc, char *argv[])
 {
   printf("请输入整型二叉树结点，以-1为虚结点！\n");
@@ -248,6 +292,7 @@ int main(int argc, char *argv[])
     printf("路径是：");
     printStack(&s);
   }
+
   BiTNode *p = T->left->right;
   BiTNode *q = T->left->left;
   printf("\n");
