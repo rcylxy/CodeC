@@ -145,32 +145,40 @@ void pre_order_his(BiTree root)
     T = T->right;
   }
 }
-bool path(BiTNode *root, BiTNode *node, Stack *s)
+bool path_my(BiTNode *root, BiTNode *node, Stack *s)
 {
-  BiTree T = root, p = NULL;
-  if (T == NULL || node == NULL || !is_empty(s))
-    return false;
-  while (T || !is_empty(s))
+  if (root == node)
   {
-    while (T)
+    push(s, root);
+    return true;
+  }
+  if (!root || !node || !is_empty(s))
+    return false;
+  BiTree p = root, q = NULL;
+  while (!is_empty(s) || p != NULL)
+  {
+    while (p)
     {
-      push(s, T);
-      if (T == node)
+      push(s, p);
+      if (p == node)
         return true;
-      T = T->left;
+      p = p->left;
     }
-    top(s, &T);
-    if (!T->right || T->right == p)
+    top(s, &p);
+    if (!p->right || p->right == q)
     {
-      p = T;
-      pop(s, &T);
-      T = NULL;
+      q = p;
+      pop(s, &p);
+      p = NULL;
     }
     else
-      T = T->right;
+    {
+      p = p->right;
+    }
   }
   return false;
 }
+
 void printStack(Stack *s)
 {
   while (!is_empty(s))
@@ -181,23 +189,20 @@ void printStack(Stack *s)
   }
   return;
 }
-// BiTNode *nearest_ancestor(BiTree root, BiTNode *p, BiTNode *q)
-// {
-//   Stack s1;
-//   init_stack(&s1);
-//   s1.top = -1;
-//   path(root, p, &s1);
-//   printStack(&s1);
-//   printf("\n");
-//   Stack s2;
-//   init_stack(&s2);
-//   s2.top = -1;
-//   path(root, q, &s2);
-//   printStack(&s2);
-// }
-/* test
-1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1
-*/
+BiTNode *nearest_ancestor(BiTree root, BiTNode *p, BiTNode *q)
+{
+  Stack s1;
+  init_stack(&s1);
+  s1.top = -1;
+  path(root, p, &s1);
+  printStack(&s1);
+  printf("\n");
+  Stack s2;
+  init_stack(&s2);
+  s2.top = -1;
+  path(root, q, &s2);
+  printStack(&s2);
+}
 int main()
 {
   printf("请输入整型二叉树结点，以-1为虚结点！\n");
@@ -221,9 +226,8 @@ int main()
   Stack s;
   init_stack(&s);
   s.top = -1;
-  // node = T->left->left->right->left;
-  node = T->right->left->right;
-  int outcome = path(T, node, &s);
+  node = T->left->left->right->left;
+  int outcome = path_my(T, node, &s);
   printf("\n%d\n", outcome);
   if (outcome != 0)
   {
@@ -231,9 +235,9 @@ int main()
     printStack(&s);
   }
   printf("\n");
-  // BiTNode *p = T->left->right;
-  // BiTNode *q = T->left->left;
-  // nearest_ancestor(T, p, q);
+  BiTNode *p = T->left->right;
+  BiTNode *q = T->left->left;
+  nearest_ancestor(T, p, q);
 }
 /* test
 1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1
