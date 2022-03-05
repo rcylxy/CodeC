@@ -222,7 +222,7 @@ int main()
   init_stack(&s);
   s.top = -1;
   // node = T->left->left->right->left;
-  node = T->right->right->left;
+  node = T->right->left->right;
   int outcome = path(T, node, &s);
   printf("\n%d\n", outcome);
   if (outcome != 0)
