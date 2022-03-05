@@ -20,7 +20,6 @@ typedef struct Node
   struct Node *left;
   struct Node *right;
 } BiTNode, *BiTree;
-
 bool path(BiTNode *root, BiTNode *node, Stack *s)
 {
   BiTree T = root, p = NULL;

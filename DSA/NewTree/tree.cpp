@@ -145,7 +145,7 @@ void pre_order_his(BiTree root)
     T = T->right;
   }
 }
-bool path_my(BiTNode *root, BiTNode *node, Stack *s)
+bool path(BiTNode *root, BiTNode *node, Stack *s)
 {
   if (root == node)
   {
@@ -178,7 +178,6 @@ bool path_my(BiTNode *root, BiTNode *node, Stack *s)
   }
   return false;
 }
-
 void printStack(Stack *s)
 {
   while (!is_empty(s))
@@ -191,19 +190,32 @@ void printStack(Stack *s)
 }
 BiTNode *nearest_ancestor(BiTree root, BiTNode *p, BiTNode *q)
 {
+
   Stack s1;
   init_stack(&s1);
   s1.top = -1;
   path(root, p, &s1);
-  printStack(&s1);
   printf("\n");
   Stack s2;
   init_stack(&s2);
   s2.top = -1;
   path(root, q, &s2);
-  printStack(&s2);
+  BiTree m, n, ret = NULL;
+  while (!is_empty(&s1) && !is_empty(&s2))
+  {
+    pop(&s1, &m);
+    pop(&s2, &n);
+    if (m == n)
+    {
+      ret = m;
+      break;
+    }
+    if (m != n)
+      continue;
+  }
+  return ret;
 }
-int main()
+int main(int argc, char *argv[])
 {
   printf("请输入整型二叉树结点，以-1为虚结点！\n");
   BiTree T;
@@ -222,22 +234,27 @@ int main()
   printf("\n改进后非递归前序遍历:\n");
   pre_order_his(T);
   printf("\n");
-  printf("是否找到路径？");
+
+  printf("\n");
+  printf("对于node = T->left->left->right->left,是否找到路径？");
   Stack s;
   init_stack(&s);
   s.top = -1;
   node = T->left->left->right->left;
-  int outcome = path_my(T, node, &s);
+  int outcome = path(T, node, &s);
   printf("\n%d\n", outcome);
   if (outcome != 0)
   {
     printf("路径是：");
     printStack(&s);
   }
-  printf("\n");
   BiTNode *p = T->left->right;
   BiTNode *q = T->left->left;
-  nearest_ancestor(T, p, q);
+  printf("\n");
+  printf("\np = T->left->right");
+  printf("\nq = T->left->left");
+  printf("p和q的共同祖先是%d", nearest_ancestor(T, p, q)->data);
+  return 0;
 }
 /* test
 1 2 3 -1 -1 4 -1 -1 5 6 7 -1 -1 8 -1 -1 9 -1 -1
