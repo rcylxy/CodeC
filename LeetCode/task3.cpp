@@ -1,36 +1,69 @@
 #include <stdio.h>
-int myStrLen(const char *s)
+#include <stdlib.h>
+int myStrLen(char *s)
 {
   int len = 0;
-  while (*s++ != '\0')
-    len++;
-  return len;
+  while (s[len++] != '\0')
+    ;
+  return len - 1;
 }
-int isNoneRepeat(const char *s)
+int isNoneRepeat(char *s)
 {
+  int i = 0, j = 0;
   int len = myStrLen(s);
-  for (int i = 0; i < len; ++i)
+  int backet[300] = {0};
+  for (int i = 0; s[i] != '\0'; i++)
   {
-    for (int j = 0; j < len; ++j)
-    {
-      if (s[i] == s[j] && i != j)
-        return 0;
-    }
+    backet[s[i]]++;
+    if (backet[s[i]] > 1)
+      return 0;
   }
   return 1;
 }
+char *leftAndRight(char *s, int left, int right)
+{
+  int len = myStrLen(s);
+  char *ret = (char *)malloc((len + 10) * sizeof(char));
+  int cnt = 0;
+  for (int i = left; i <= right; ++i)
+  {
+    ret[cnt] = s[i];
+    cnt++;
+  }
+  ret[cnt + 1] = '\0';
+  return ret;
+}
 int lengthOfLongestSubstring(char *s)
 {
-  int ret = 1;
+  int max = 1;
+  int len = myStrLen(s);
   int i = 0;
   int j = 0;
-  return ret;
+  if (len == 0)
+    return 0;
+  for (i = 0; i < len; ++i)
+  {
+    if (s[i] == s[i + 1])
+    {
+      continue;
+    }
+
+    for (j = i; j < len && i <= j; ++j)
+    {
+      if (i < j)
+        if (isNoneRepeat(leftAndRight(s, i, j))) // is noneRepeat subString
+        {
+          max = max > (j - i + 1) ? max : (j - i + 1);
+        }
+    }
+  }
+  return max;
 }
 
 int main(int argc, char *argv[])
 {
-  const char *s = "abcdefgabcdefg";
-  printf("%d\n", myStrLen(s));
-  const char *test = "abcd";
+  char *s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ abcdefghijklmnSTUV";
+  char *test = "abcd";
   printf("%d\n", isNoneRepeat(test));
+  printf("%d", lengthOfLongestSubstring(s));
 }
