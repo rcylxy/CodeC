@@ -1,0 +1,42 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/**",
+                "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++",
+                "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32",
+                "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward",
+                "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include",
+                "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed",
+                "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include",
+                "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/include/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.19041.0",
+            "compilerPath": "D:\\homework\\mingw\\mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0\\mingw64\\bin\\gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": "",
+                "path": [
+                    "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/**",
+                    "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++",
+                    "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32",
+                    "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward",
+                    "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include",
+                    "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed",
+                    "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include",
+                    "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/include/**"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}
