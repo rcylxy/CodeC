@@ -144,7 +144,7 @@ int main()
 {
   BLString *T;
   T = (BLString *)malloc(sizeof(BLString));
-  const char *s = "abcdefgh";
+  const char *s = "abcd";
   blstr_init(T);
   Mystrcpy(T, s);
   printString(T);
@@ -154,7 +154,7 @@ int main()
   blstr_init(sub);
   Mystrcpy(sub, ch);
 
-  if (blstr_substr(*T, 6, 3, sub) == false)
+  if (blstr_substr(*T, 0, 2, sub) == false)
   {
     printf("\n");
     printf("失败！\n");
