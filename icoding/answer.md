@@ -752,7 +752,6 @@ bool add_matrix(const TSMatrix* pM, const TSMatrix* pN, TSMatrix* pQ)
     
     pQ->m = pM->m;
     pQ->n = pM->n;
-    //记得检查结构体赋值!! 
     int i, j, k = 0;
     for(i = 0, j = 0; i < pM->len && j < pN->len;){
         if(pM->data[i].i == pN->data[j].i){
@@ -763,7 +762,7 @@ bool add_matrix(const TSMatrix* pM, const TSMatrix* pN, TSMatrix* pQ)
                     pQ->data[k].j = pM->data[i].j;
                     k++; i++; j++;
                 }
-                else{//这个else可以不要,前面的if里面的i++和j++可以提出来 
+                else{
                     i++; j++;
                 }
             }
@@ -840,7 +839,7 @@ init_cross_list 函数将 ElemType 数组中非0元素保存到十字链表中�
 2）实现十字链表的删除操作：
 int del_cross_list(PCrossList L, ElemType k);
 其中 L 指向 要处理的 CrossList 结构，k 为要删除的元素；
-del_cross_list 函数删除十字链表中所有值为 k 的结点，并返回删除结点的个数。
+del_cross_list 函数删链表中所有值为 k 的结点，并返回删除结点的个数。
 
 
 掌握!!!!!! 
@@ -851,9 +850,7 @@ int init_cross_list(PCrossList L, const ElemType* A, int m, int n)
 
     L->cols = n;
     L->rows = m;
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //下面这个是个很奇怪的数组可以认为是指针数组 
-    if (!(L->rowhead = (OLink*)malloc(m * sizeof(OLink))))//也可以return 0;....icoding不会检测..... 
+    if (!(L->rowhead = (OLink*)malloc(m * sizeof(OLink))))
         ;
     if (!(L->colhead = (OLink*)malloc(n * sizeof(OLink))))
         ;
@@ -873,9 +870,8 @@ int init_cross_list(PCrossList L, const ElemType* A, int m, int n)
                 p->col = j;
                 p->row = i;
                 p->value = A[i * n + j];
-                //!!!
                 if (L->rowhead[i] == NULL || L->rowhead[i]->col > j) {
-                    p->right = L->rowhead[i]; //头插法
+                    p->right = L->rowhead[i]; 
                     L->rowhead[i] = p;
                 } else {
                     q = L->rowhead[i];
@@ -900,7 +896,7 @@ int init_cross_list(PCrossList L, const ElemType* A, int m, int n)
     }
     L->nums = k;
     return L->nums;
-} //init
+}
 
 
 int del_cross_list(PCrossList L, ElemType k)
@@ -914,7 +910,7 @@ int del_cross_list(PCrossList L, ElemType k)
         p = L->rowhead[i];
         q = p;
         while (p) {
-            if (p->value == k && p == q) {//第一个结点(不设头结点) 
+            if (p->value == k && p == q) { 
                 L->rowhead[i] = L->rowhead[i]->right;
                 free(p);
                 p = L->rowhead[i];
@@ -931,7 +927,6 @@ int del_cross_list(PCrossList L, ElemType k)
             }
         }
     }
-    //下面的for可以不要,icoding根本不得检测纵向的链.......................................................... 
     for (j = 0; j < L->cols; j++) {
         x = L->colhead[j];
         y = x;
@@ -950,7 +945,6 @@ int del_cross_list(PCrossList L, ElemType k)
             }
         }
     }
-
     L->nums -= num;
     return num;
 }
