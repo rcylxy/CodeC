@@ -22,6 +22,7 @@ pM, pN, pQ 分别指向三个矩阵，当 pM 和 pN 两个矩阵不可加时，�
 #define MAXSIZE 100 //假设非零元个数的最大值为100
 #define ElemType int
 #define MAXSIZE 100 //假设非零元个数的最大值为100
+// success!!! 重写成功
 typedef struct
 {
   int i, j;   //非零元的行下标和列下标，i 和 j 从 1 开始计数，与数学中矩阵元素的编号一致
@@ -35,4 +36,79 @@ typedef struct
 } TSMatrix;
 bool add_matrix(const TSMatrix *pM, const TSMatrix *pN, TSMatrix *pQ)
 {
+  if ((!pM) || (!pN) || (!pQ) || pM->m != pN->m || pM->n != pN->n)
+    return false;
+  pQ->m = pM->m;
+  pQ->n = pM->n;
+  int M = 0, N = 0, Q = 0, mi = 0, mj = 0, ni = 0, nj = 0;
+  for (; M < pM->len && N < pN->len; ++M, ++N)
+  {
+    if (pM->data[M].i < pN->data[N].i)
+    {
+      pQ->data[Q].e = pM->data[M].e;
+      pQ->data[Q].i = pM->data[M].i;
+      pQ->data[Q].j = pM->data[M].j;
+      pQ->len++;
+      Q++;
+    }
+    else if (pM->data[M].i > pN->data[N].i)
+    {
+      pQ->data[Q].e = pN->data[N].e;
+      pQ->data[Q].i = pN->data[N].i;
+      pQ->data[Q].j = pN->data[N].j;
+      pQ->len++;
+      Q++;
+    }
+    else if (pM->data[M].i == pN->data[N].i)
+    {
+      if (pM->data[M].j > pN->data[N].j)
+      {
+        pQ->data[Q].e = pN->data[N].e;
+        pQ->data[Q].i = pN->data[N].i;
+        pQ->data[Q].j = pN->data[N].j;
+        pQ->len++;
+        Q++;
+      }
+      if (pM->data[M].j < pN->data[N].j)
+      {
+        pQ->data[Q].e = pM->data[M].e;
+        pQ->data[Q].i = pM->data[M].i;
+        pQ->data[Q].j = pM->data[M].j;
+        pQ->len++;
+        Q++;
+      }
+      if (pM->data[M].j == pN->data[N].j)
+      {
+        if (pM->data[M].e + pN->data[N].e != 0)
+        {
+          pQ->data[Q].e = pM->data[M].e;
+          pQ->data[Q].i = pM->data[M].i;
+          pQ->data[Q].j = pM->data[M].e + pN->data[N].e;
+          pQ->len++;
+          Q++;
+        }
+      }
+    }
+  }
+  if (M == pM->m && N == pN->n)
+    return true;
+  while (M < pM->m)
+  {
+    pQ->data[Q].e = pM->data[M].e;
+    pQ->data[Q].i = pM->data[M].i;
+    pQ->data[Q].j = pM->data[M].j;
+    pQ->len++;
+    Q++;
+    M++;
+  }
+  while (N < pN->n)
+  {
+    pQ->data[Q].e = pN->data[N].e;
+    pQ->data[Q].i = pN->data[N].i;
+    pQ->data[Q].j = pN->data[N].j;
+    pQ->len++;
+    Q++;
+    N++;
+  }
+  return true;
 }
