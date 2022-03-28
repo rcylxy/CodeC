@@ -13,16 +13,25 @@ newstr，替换成的新字符串
 如果再进行替换，则会超出 out 所占用的空间，所以停止替换操作。此时函数应该返回 2, out指向的串为 "aaabbb333333c"
 再如：原始串为 "aaabbbccc"，outlen 为10, oldstr 为 "bb"，newstr 为 "123456"，进行替换后所得的串长度为14，与结束符一共占 15 个字节，超过outlen的10字节，此时不进行替换，函数应该返回 0。8
 */
+#define MAXSIZE 100
 #include <stdio.h>
 #include <stdlib.h>
-int Len(const char *s)
+#include <string.h>
+void strserach(const char *in, const char *oldstr)
 {
-  int ret = 0, i = 0;
-  while (*(s++) != '\0')
-    ret++;
-  return ret;
+  int lenOfIn = strlen(in);
+  int lenOfOldstr = strlen(oldstr);
+  int i = 0, j = 0;
+  while (i < lenOfIn)
+  {
+    while (j < lenOfOldstr)
+    {
+    }
+  }
 }
-
 int str_replace(const char *in, char *out, int outlen, const char *oldstr, const char *newstr)
+{
+}
+int main()
 {
 }
