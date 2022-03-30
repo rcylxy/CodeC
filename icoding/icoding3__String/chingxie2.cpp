@@ -17,21 +17,47 @@ newstr，替换成的新字符串
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-void strserach(const char *in, const char *oldstr)
+int Len(const char *s)
 {
-  int lenOfIn = strlen(in);
-  int lenOfOldstr = strlen(oldstr);
-  int i = 0, j = 0;
-  while (i < lenOfIn)
-  {
-    while (j < lenOfOldstr)
-    {
-    }
-  }
+  int ret = 0;
+  while (*(s++) != '\0')
+    ret++;
+  return ret;
 }
 int str_replace(const char *in, char *out, int outlen, const char *oldstr, const char *newstr)
 {
-}
-int main()
-{
+  int n = Len(in), old_len = Len(oldstr), new_len = Len(newstr), ret = 0, i, j, k;
+  for (i = 0, k = -1; i < n && k + 1 < outlen - 1;)
+  {
+    int ok = 0;
+    if (i + old_len - 1 < n && k + (n - i - old_len) + new_len < outlen - 1)
+    {
+      int flag = 1;
+      for (j = 0; j < old_len; ++j)
+      {
+        if (in[i + j] != oldstr[j])
+        {
+          flag = 0;
+          break;
+        }
+      }
+      if (flag)
+      {
+        for (j = 0; j < new_len; ++j)
+          out[++k] = newstr[j];
+        ok = 1;
+      }
+    }
+    if (ok)
+    {
+      i += old_len;
+      ++ret;
+    }
+    else
+    {
+      out[++k] = in[i++];
+    }
+  }
+  out[++k] = '\0';
+  return ret;
 }
