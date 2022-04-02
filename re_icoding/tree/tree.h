@@ -139,7 +139,7 @@ void pre_order(BiTree root)
 }
 void TraverseStack(Stack *s)
 {
-  for (int i = 0; i < s->top; ++i)
+  for (int i = 0; i <= s->top; ++i)
   {
     printf("%d ", s->elem[i]->data);
   }
