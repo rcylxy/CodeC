@@ -75,6 +75,7 @@ int str_replace(const char *in, char *out, int outlen, const char *oldstr, const
   //   strcat(compare, newstr);
   //   strcat(compare, leftAndRight(in, work2[i - 1] + 2, work1[i]));
   // }
+
   printf("\n%s", compare);
   return 0;
 }
