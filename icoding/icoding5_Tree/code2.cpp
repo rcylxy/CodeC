@@ -39,7 +39,7 @@ bool path(BiTNode *root, BiTNode *node, Stack *s)
     {
       p = T;
       pop(s, &T);
-      T = NULL;
+      T = NULL; //置空T，由于上面的不可以再访问左侧的节点了
     }
     else
       T = T->right;

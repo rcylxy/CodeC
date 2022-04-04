@@ -1332,38 +1332,18 @@ bool insert_arc(ListGraph *G, VertexType v, VertexType w){
 bool insert_arc(ListGraph *G, VertexType v, VertexType w){
     int i, j;
     ArcNode *p;
-    
     i = locate_vertex(G, v);
     j = locate_vertex(G, w);
-    
-    //判结点是否存在,不存在就返回false 
     if(i == -1|| j == -1)
         return false;
-        
-    //判边是否存在,存在就返回false 
-    //需要注意的是p->adjvex = j这个判断条件,一个是int类型,一个是不要把这个判断条件放到for里面 
     for(p = G->vertex[i].firstarc;  p; p = p->nextarc)
         if(p->adjvex == j)     return false;
-    
-    //!!!!!需要注意的是这里是单项插入,不考虑有向无向
-    //插入到方向就是v-->w 
-//    for(p = G->vertex[j].firstarc;  p; p = p->nextarc)
-//    if(p->adjvex == i)  return false;
-
-    
-//    if(G->type == UDG){
-//        p->nextarc = G->vertex[j].firstarc->nextarc;
-//        p->adjvex = v;
-//        G->vertex[j].firstarc = p; 
-//    }
-
-//!!!别忘了分配空间,这个是建立一个新的节点 
     p = (ArcNode *)malloc(sizeof(ArcNode));
     p->adjvex = j;
-    G->arcnum++; 
-    if(!G->vertex[i].firstarc)//空的情况 
+    G->arcnum++;
+    if(!G->vertex[i].firstarc)
         G->vertex[i].firstarc = p;
-    else{//头插 G->vertex[i].firstarc是头结点 
+    else{
         p->nextarc = G->vertex[i].firstarc->nextarc;
         G->vertex[i].firstarc = p;
     }

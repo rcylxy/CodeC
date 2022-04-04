@@ -71,7 +71,7 @@ bool insert_arc(ListGraph *G, VertexType v, VertexType w)
       p = p->nextarc;
     }
     p->nextarc = NewNodeV;
-    NewNodeV->adjvex = W;
+    NewNodeV->adjvex = w;
     NewNodeV->nextarc = NULL;
     G->arcnum++;
   }
@@ -89,13 +89,14 @@ bool insert_arc(ListGraph *G, VertexType v, VertexType w)
     {
       q = q->nextarc;
     }
+    NewNodeV->adjvex = w;
+    NewNodeV->nextarc = NULL;
     p->nextarc = NewNodeV;
-    NewNodeV->adjvex = W;
-    NewNodeV->nextarc = NULL;
 
-    q->nextarc = NewNodeV;
-    NewNodeV->adjvex = V;
+    NewNodeV->adjvex = w;
     NewNodeV->nextarc = NULL;
+    q->nextarc = NewNodeV;
+
     G->arcnum += 2;
   }
   return true;
