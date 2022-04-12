@@ -19,6 +19,7 @@ typedef struct
   BiTNode *elem[Stack_Size];
   int top;
 } Stack;
+bool pre_order2(BiTree root);
 void pre_order(BiTree root);
 bool is_empty(Stack *S);
 bool is_full(Stack *S);
@@ -30,6 +31,11 @@ bool InitBiTree(BiTree *T);
 bool CreateBiTree(BiTree *T);
 void visit_node(BiTNode *node);
 void TraverseStack(Stack *s);
+void TraverseFore(BiTree T);
+void TraverseMid(BiTree T);
+void TraverseLast(BiTree T);
+void TraverseTree(BiTree *T);
+
 bool is_empty(Stack *S)
 {
   return (S->top == -1);
@@ -137,6 +143,25 @@ void pre_order(BiTree root)
     }
   }
 }
+bool pre_order2(BiTree root)
+{
+  Stack s;
+  BiTNode *temp;
+  if (root == NULL)
+    return false;
+  init_stack(&s);
+  s.top = -1;
+  push(&s, root);
+  while (!is_empty(&s))
+  {
+    top(&s, &temp);
+    visit_node(temp);
+    pop(&s, &temp);
+    push(&s, temp->left);
+    push(&s, temp->right);
+  }
+  return true;
+}
 void TraverseStack(Stack *s)
 {
   for (int i = 0; i <= s->top; ++i)
@@ -144,4 +169,28 @@ void TraverseStack(Stack *s)
     printf("%d ", s->elem[i]->data);
   }
   return;
+}
+void TraverseFore(BiTree T)
+{
+  if (!T)
+    return;
+  visit_node(T);
+  TraverseFore(T->left);
+  TraverseFore(T->right);
+}
+void TraverseMid(BiTree T)
+{
+  if (!T)
+    return;
+  TraverseMid(T->left);
+  visit_node(T);
+  TraverseMid(T->right);
+}
+void TraverseLast(BiTree T)
+{
+  if (!T)
+    return;
+  TraverseLast(T->left);
+  TraverseLast(T->right);
+  visit_node(T);
 }
