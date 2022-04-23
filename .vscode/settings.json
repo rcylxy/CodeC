@@ -3,6 +3,7 @@
     "vector": "cpp",
     "limits": "cpp",
     "*.tcc": "cpp",
-    "type_traits": "cpp"
+    "type_traits": "cpp",
+    "stack": "cpp"
   }
 }
