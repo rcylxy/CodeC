@@ -13,5 +13,6 @@ int main()
       cnt++;
     }
   }
+  printf("homework2\n");
   printf("%d", cnt);
 }
