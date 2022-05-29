@@ -14,8 +14,7 @@ void printArray(int b[], int length) {
   return;
 }
 
-// 冒泡排序实现一
-void bubbleSortOne(int b[], int length) {
+void bubbleSortA(int b[], int length) {
   int i = 0;
   int j = 0;
   for (; i < length; ++i) {
@@ -30,24 +29,8 @@ void bubbleSortOne(int b[], int length) {
   return;
 }
 
-// 冒泡排序实现二
-void bubbleSortTwo(int b[], int length) {
-  int i = 0;
-  int j = 0;
-  for (; i < length; ++i) {
-    for (j = length - 1; j >= i; --j) {
-      if (b[j] <= b[j - 1]) {
-        int temp = b[j];
-        b[j] = b[j - 1];
-        b[j - 1] = temp;
-      }
-    }
-  }
-  return;
-}
-
 // 冒泡排序实现三（时间复杂度较高）
-void bubbleSortThree(int b[], int length) {
+void bubbleSortB(int b[], int length) {
   int i = 0;
   int j = 0;
   for (; i < length; ++i) {
@@ -63,29 +46,7 @@ void bubbleSortThree(int b[], int length) {
   return;
 }
 
-// 简单选择排序实现一
-void simpleSelectSortOne(int b[], int length) {
-  int min = b[0];
-  int loc = 0;
-  int i = 0;
-  int j = 0;
-  for (i = 0; i < length - 1; ++i) {
-    for (j = i; j < length; ++j) {
-      if (b[j] <= min) {
-        min = b[j];
-        loc = j;
-      }
-    }
-    int temp = b[loc];
-    b[loc] = b[i];
-    b[i] = temp;
-    min = b[i + 1];
-  }
-  return;
-}
-
-// 简单选择排序实现二
-void simpleSelectSortTwo(int b[], int length) {
+void simpleSelectSort(int b[], int length) {
   int max = b[0];
   int loc = 0;
   int i = 0;
@@ -105,22 +66,8 @@ void simpleSelectSortTwo(int b[], int length) {
   return;
 }
 
-// 直接插入排序实现一
-void straightInsertSortOne(int b[], int length) {
-  int i = 0;
-  int j = 0;
-  for (i = 0; i < length; ++i) {
-    int compare = b[i];
-    for (j = i - 1; j >= 0 && b[j] > compare; --j) {
-      b[j + 1] = b[j];
-    }
-    b[j + 1] = compare;
-  }
-  return;
-}
-
 // 直接插入排序实现二
-void straightInsertSortTwo(int b[], int length) {
+void straightInsertSort(int b[], int length) {
   int i = 0;
   int j = 0;
   for (i = 0; i < length; ++i) {
@@ -133,6 +80,7 @@ void straightInsertSortTwo(int b[], int length) {
   return;
 }
 
+// 折半查找实现二
 void halfIntervalSort(int b[], int length) {
   int i = 0, j = 0;
   int loc = 0;
@@ -144,7 +92,7 @@ void halfIntervalSort(int b[], int length) {
     compare = b[i];
     while (left <= right) {
       mid = (left + right) / 2;
-      if (b[mid] > compare) {
+      if (b[mid] < compare) {
         right = mid - 1;
       } else
         left = mid + 1;
@@ -161,16 +109,11 @@ void halfIntervalSort(int b[], int length) {
 int main() {
   int a[] = {4, 8, 7, 8, 2, 5, 8, 7, 4, 7};
   int length = sizeof(a) / sizeof(a[0]);
-  // bubbleSortOne(a, length);
-  // bubbleSortTwo(a, length);
-  // bubbleSortThree(a, length);
-  // simpleSelectSortOne(a, length);
-  // simpleSelectSortTwo(a, length);
-  // straightInsertSortOne(a, length);
-  // straightInsertSortTwo(a, length);
+  bubbleSortA(a, length);
+  bubbleSortB(a, length);
+  simpleSelectSort(a, length);
+  straightInsertSort(a, length);
   halfIntervalSort(a, length);
-  // printf("%d\n", halfSearch(a, length, 6));
-
   printArray(a, length);
   return 0;
 }
