@@ -23,6 +23,7 @@ typedef struct {
 } MGraph;
 
 void printMap(int arc[][MAXVEX], int length) {
+  printf("\nThe follow is the map of the graph:\n");
   printf("\t");
   for (int i = 0; i < length; ++i) {
     printf("%d\t", i);
@@ -41,7 +42,7 @@ void printMap(int arc[][MAXVEX], int length) {
   }
 }
 
-void CreateMGraph(MGraph* G) {
+void CreateMGraphMap(MGraph* G) {
   int i, j, k, w;
   printf("Please input your graph's num of vexs and nums of edges! \n");
   scanf("%d,%d", &G->numNodes, &G->numEdges);
@@ -66,13 +67,13 @@ void CreateMGraph(MGraph* G) {
 
 int main() {
   MGraph G;
-  CreateMGraph(&G);
+  CreateMGraphMap(&G);
   printf("success\n");
   return 0;
 }
 /*
 
-9,11 0 1 2 3 4 5 6 7 8 9 10
-1,2,1 0,8,11 2,5,2 2,4,3 2,3,4 5,4,5 3,4,6 3,7,7 5,7,8 5,8,9 7,8,10
+9,12 0 1 2 3 4 5 6 7 8
+2,6,7 1,2,1 0,8,11 2,5,2 2,4,3 2,3,4 5,4,5 3,4,6 3,7,7 5,7,8 5,8,9 7,8,10
 
 */
