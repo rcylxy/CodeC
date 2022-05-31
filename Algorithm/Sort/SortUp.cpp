@@ -3,8 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 // #include <iostream>
+
 // 数组作为函数参数会退化为指针
 #define BASKETSIZE 10000
+
 // 规范打印数组
 void printArray(int b[], int length) {
   for (int i = 0; i < length; ++i) {
@@ -160,6 +162,11 @@ void quickSort(int b[], int left, int right) {
   quickSort(b, i + 1, right);
 }
 
+// qort演示
+int comparefuc(const void* a, const void* b) {
+  return (*(int*)(a) - *(int*)(b));
+}
+
 int main() {
   int a[] = {4, 8, 5, 8, 74, 12, 8, 0, 0, 7};
   int length = sizeof(a) / sizeof(a[0]);
@@ -172,7 +179,9 @@ int main() {
   // shellSort(a, length, dlta, dltaLength);
   // basketSort(a, length);
   // quickSort(a, 0, length - 1);
-  quickSort(a, 0, length - 1);
+  // quickSort(a, 0, length - 1);
+  // qsort(a, length, sizeof(int), comparefuc);
+  // std::sort(a, a + length);
   printArray(a, length);
   return 0;
 }
