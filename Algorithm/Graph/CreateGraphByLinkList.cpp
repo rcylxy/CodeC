@@ -149,6 +149,12 @@ void CreateALGraph(GraphAdjList* G) {
   return;
 }
 
+void initvisited(bool visited[], int length) {
+  for (int i = 0; i < length; ++i) {
+    visited[i] = false;
+  }
+}
+
 void DFS(GraphAdjList* G, int i, bool (&rvisited)[MAXVEX]) {
   EdgeNode* p;
   rvisited[i] = true;
@@ -162,16 +168,44 @@ void DFS(GraphAdjList* G, int i, bool (&rvisited)[MAXVEX]) {
   return;
 }
 
-void BFS() {}
+void BFS(GraphAdjList* G, int i, bool (&rvisited)[MAXVEX]) {
+  SqQueue Q;
+  initQueue(&Q);
+  EdgeNode* p;
+  for (int k = i; k < G->numNodes; ++k) {
+    if (!rvisited[k]) {
+      rvisited[k] = true;
+      printf("%d ", G->adjlist[k].data);
+      enQueue(&Q, k);
+      while (!isEmptyQueue(&Q)) {
+        deQueue(&Q, &k);
+        p = G->adjlist[k].firstedge;
+        while (p) {
+          if (!rvisited[p->adjvex]) {
+            rvisited[p->adjvex] = true;
+            printf("%d ", G->adjlist[p->adjvex].data);
+            enQueue(&Q, p->adjvex);
+          }
+          p = p->next;
+        }
+      }  // while
+    }    // if
+  }
+  return;  // for
+}  // func
 
 int main() {
   GraphAdjList G;
   CreateALGraph(&G);
-  printf("\nThe DFS list is as follow:\n");
   bool visited[MAXVEX];
+  initvisited(visited, MAXVEX);
   bool(&rvisited)[MAXVEX] = visited;
+  printf("\nThe DFS list is as follow:\n");
   DFS(&G, 0, rvisited);
-
+  initvisited(visited, MAXVEX);
+  printf("\n");
+  printf("\nThe BFS list is as follow:\n");
+  BFS(&G, 0, rvisited);
   return 0;
 }
 /*
