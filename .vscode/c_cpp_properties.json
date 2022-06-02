@@ -10,7 +10,8 @@
                 "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include",
                 "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed",
                 "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include",
-                "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/include/**"
+                "D:/homework/mingw/mingw64x86_64-7.3.0-release-posix-seh-rt_v5-rev0/mingw64/include/**",
+                "${workspaceFolder}"
             ],
             "defines": [
                 "_DEBUG",

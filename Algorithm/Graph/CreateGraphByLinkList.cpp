@@ -17,17 +17,18 @@ typedef int QElemType;
 
 typedef struct EdgeNode {
   int adjvex;
-  EdgeType Info;
+  EdgeType weight;
   struct EdgeNode* next;
 } EdgeNode;
 
 typedef struct VertexNode {
+  int in;
   VertexType data;
   EdgeNode* firstedge;
 } VertexNode, AdjList[MAXVEX];
 
 typedef struct {
-  AdjList adjlist;
+  AdjList adjList;
   int numNodes, numEdges;
 } GraphAdjList;
 
@@ -104,10 +105,10 @@ void printList(AdjList x, int length) {
   EdgeNode* e;
   for (int i = 0; i < length; ++i) {
     e = x[i].firstedge;
-    printf("%d-(%d)->", i, e->Info);
+    printf("%d-(%d)->", i, e->weight);
     while (e != NULL) {
       if (e->next)
-        printf("%d-(%d)->", e->adjvex, e->next->Info);
+        printf("%d-(%d)->", e->adjvex, e->next->weight);
       else
         printf("%d", e->adjvex);
       e = e->next;
@@ -123,8 +124,8 @@ void CreateALGraph(GraphAdjList* G) {
   scanf("%d,%d", &G->numNodes, &G->numEdges);
   printf("Please input the vex information!\n");
   for (i = 0; i < G->numNodes; ++i) {
-    scanf("%d", &G->adjlist[i].data);
-    G->adjlist[i].firstedge = NULL;
+    scanf("%d", &G->adjList[i].data);
+    G->adjList[i].firstedge = NULL;
   }
   printf("Please input the (vi,vj) && its weight and");
   printf("the format is int ,int ,int as a group!\n");
@@ -134,17 +135,17 @@ void CreateALGraph(GraphAdjList* G) {
     scanf("%d,%d,%d", &i, &j, &w);
     e = (EdgeNode*)malloc(sizeof(EdgeNode));
     e->adjvex = j;
-    e->next = G->adjlist[i].firstedge;
-    e->Info = w;
-    G->adjlist[i].firstedge = e;
+    e->next = G->adjList[i].firstedge;
+    e->weight = w;
+    G->adjList[i].firstedge = e;
 
     e = (EdgeNode*)malloc(sizeof(EdgeNode));
     e->adjvex = i;
-    e->next = G->adjlist[j].firstedge;
-    e->Info = w;
-    G->adjlist[j].firstedge = e;
+    e->next = G->adjList[j].firstedge;
+    e->weight = w;
+    G->adjList[j].firstedge = e;
   }
-  printList(G->adjlist, G->numNodes);
+  printList(G->adjList, G->numNodes);
   printf("Your Creatation is successly achieved!\n");
   return;
 }
@@ -155,35 +156,35 @@ void initvisited(bool visited[], int length) {
   }
 }
 
-void DFS(GraphAdjList* G, int i, bool (&rvisited)[MAXVEX]) {
+void DFSbylinklist(GraphAdjList* G, int i, bool (&rvisited)[MAXVEX]) {
   EdgeNode* p;
   rvisited[i] = true;
-  printf("%d ", G->adjlist[i].data);
-  p = G->adjlist[i].firstedge;
+  printf("%d ", G->adjList[i].data);
+  p = G->adjList[i].firstedge;
   while (p) {
     if (!rvisited[p->adjvex])
-      DFS(G, p->adjvex, rvisited);
+      DFSbylinklist(G, p->adjvex, rvisited);
     p = p->next;
   }
   return;
 }
 
-void BFS(GraphAdjList* G, int i, bool (&rvisited)[MAXVEX]) {
+void BFSbylinklist(GraphAdjList* G, int i, bool (&rvisited)[MAXVEX]) {
   SqQueue Q;
   initQueue(&Q);
   EdgeNode* p;
   for (int k = i; k < G->numNodes; ++k) {
     if (!rvisited[k]) {
       rvisited[k] = true;
-      printf("%d ", G->adjlist[k].data);
+      printf("%d ", G->adjList[k].data);
       enQueue(&Q, k);
       while (!isEmptyQueue(&Q)) {
         deQueue(&Q, &k);
-        p = G->adjlist[k].firstedge;
+        p = G->adjList[k].firstedge;
         while (p) {
           if (!rvisited[p->adjvex]) {
             rvisited[p->adjvex] = true;
-            printf("%d ", G->adjlist[p->adjvex].data);
+            printf("%d ", G->adjList[p->adjvex].data);
             enQueue(&Q, p->adjvex);
           }
           p = p->next;
@@ -201,11 +202,11 @@ int main() {
   initvisited(visited, MAXVEX);
   bool(&rvisited)[MAXVEX] = visited;
   printf("\nThe DFS list is as follow:\n");
-  DFS(&G, 0, rvisited);
+  DFSbylinklist(&G, 0, rvisited);
   initvisited(visited, MAXVEX);
   printf("\n");
   printf("\nThe BFS list is as follow:\n");
-  BFS(&G, 0, rvisited);
+  BFSbylinklist(&G, 0, rvisited);
   return 0;
 }
 /*
